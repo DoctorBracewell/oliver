@@ -36,7 +36,10 @@ bin/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
+.vscode/**/*
 
 ### Mac OS ###
 .DS_Store
+
+### Testing repository ###
+example/
