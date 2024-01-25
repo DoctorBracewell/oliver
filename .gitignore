@@ -42,4 +42,5 @@ bin/
 .DS_Store
 
 ### Testing repository ###
+example/config.properties
 example/

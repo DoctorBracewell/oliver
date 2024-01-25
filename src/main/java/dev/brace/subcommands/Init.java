@@ -1,23 +1,17 @@
 package dev.brace.subcommands;
 
 import dev.brace.repository.Repository;
-import picocli.CommandLine.Model.CommandSpec;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
-import static picocli.CommandLine.*;
+import static picocli.CommandLine.Command;
+import static picocli.CommandLine.Option;
 
 @Command(name = "init", description = "Initialises a new repository", mixinStandardHelpOptions = true)
 public class Init implements Callable<Integer> {
-
-    @Spec
-    CommandSpec spec;
-
-    @ParentCommand
-    Oliver parent;
 
     @Option(names = {"-r", "--repository"}, paramLabel = "PATH", description = "The folder where the repository should be initialised.")
     private Path repository;

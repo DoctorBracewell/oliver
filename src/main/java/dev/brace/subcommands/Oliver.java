@@ -18,6 +18,7 @@ import java.nio.file.Paths;
                 GlobalConfig.class,
                 LocalConfig.class,
                 Init.class,
+                Delta.class,
         }
 )
 public class Oliver {

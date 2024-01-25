@@ -1,22 +1,31 @@
 package dev.brace.repository;
 
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
 import dev.brace.config.ConfigurationHandler;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 
 public class Repository {
-    private Properties config = new Properties();
+    private ConfigurationHandler configHandler;
+    private JsonSchema deltaSchema;
 
-    Repository(Path path) throws IOException {
-        File configFile = Paths.get(path.toString(), ".oliver", "config.properties").toFile();
-        FileInputStream input = new FileInputStream(configFile);
+    private Path configFilePath;
+    private Path deltaSchemaFilePath;
 
-        config.load(input);
+    public Repository(Path path) throws IOException {
+        this.configFilePath = Paths.get(path.toString(), ".oliver", "config.properties");
+        this.deltaSchemaFilePath = Paths.get(path.toString(), ".oliver", "delta-schema.json");
+
+        this.configHandler = new ConfigurationHandler(configFilePath.toFile());
+
+        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
+        this.deltaSchema = factory.getSchema(new String(Files.readAllBytes(this.deltaSchemaFilePath)));
     }
 
     static public void init(File configFile, String name) throws IOException {
@@ -34,5 +43,10 @@ public class Repository {
         } catch (IOException e) {
             return false;
         }
+    }
+
+
+    public JsonSchema getDeltaSchema() {
+        return deltaSchema;
     }
 }
